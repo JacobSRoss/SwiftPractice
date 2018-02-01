@@ -19,6 +19,7 @@
 		A305AC202022A46D00DE631F /* SwiftPracticeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A305AC1F2022A46D00DE631F /* SwiftPracticeUITests.swift */; };
 		A305AC2E2022AA5C00DE631F /* CoinSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A305AC2D2022AA5C00DE631F /* CoinSound.mp3 */; };
 		A305AC302022AA9E00DE631F /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = A305AC2F2022AA9E00DE631F /* player.atlas */; };
+		A305AC322022AD4300DE631F /* GameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = A305AC312022AD4300DE631F /* GameElements.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		A305AC212022A46D00DE631F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A305AC2D2022AA5C00DE631F /* CoinSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CoinSound.mp3; sourceTree = "<group>"; };
 		A305AC2F2022AA9E00DE631F /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
+		A305AC312022AD4300DE631F /* GameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameElements.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				A305ABFD2022A46D00DE631F /* Actions.sks */,
 				A305ABFF2022A46D00DE631F /* GameScene.swift */,
 				A305AC012022A46D00DE631F /* GameViewController.swift */,
+				A305AC312022AD4300DE631F /* GameElements.swift */,
 				A305AC2D2022AA5C00DE631F /* CoinSound.mp3 */,
 				A305AC2F2022AA9E00DE631F /* player.atlas */,
 				A305AC032022A46D00DE631F /* Main.storyboard */,
@@ -278,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A305AC322022AD4300DE631F /* GameElements.swift in Sources */,
 				A305AC002022A46D00DE631F /* GameScene.swift in Sources */,
 				A305AC022022A46D00DE631F /* GameViewController.swift in Sources */,
 				A305ABFA2022A46D00DE631F /* AppDelegate.swift in Sources */,
