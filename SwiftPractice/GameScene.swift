@@ -75,6 +75,34 @@ class GameScene: SKScene ,SKPhysicsContactDelegate {
                 bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 40))
             }
         }
+        for touch in touches{
+            let location = touch.location(in: self)
+            //1
+            if isDied == true{
+                if restartBtn.contains(location){
+                    if UserDefaults.standard.object(forKey: "highestScore") != nil {
+                        let hscore = UserDefaults.standard.integer(forKey: "highestScore")
+                        if hscore < Int(scoreLbl.text!)!{
+                            UserDefaults.standard.set(scoreLbl.text, forKey: "highestScore")
+                        }
+                    } else {
+                        UserDefaults.standard.set(0, forKey: "highestScore")
+                    }
+                    restartScene()
+                }
+            } else {
+                //2
+                if pauseBtn.contains(location){
+                    if self.isPaused == false{
+                        self.isPaused = true
+                        pauseBtn.texture = SKTexture(imageNamed: "play")
+                    } else {
+                        self.isPaused = false
+                        pauseBtn.texture = SKTexture(imageNamed: "pause")
+                    }
+                }
+            }
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -137,6 +165,44 @@ class GameScene: SKScene ,SKPhysicsContactDelegate {
         
         taptoplayLbl = createTaptoplayLabel()
         self.addChild(taptoplayLbl)
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        let firstBody = contact.bodyA
+        let secondBody = contact.bodyB
+        
+        if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.pillarCategory || firstBody.categoryBitMask == CollisionBitMask.pillarCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory || firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.groundCategory || firstBody.categoryBitMask == CollisionBitMask.groundCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory{
+            enumerateChildNodes(withName: "wallPair", using: ({
+                (node, error) in
+                node.speed = 0
+                self.removeAllActions()
+            }))
+            if isDied == false{
+                isDied = true
+                createRestartBtn()
+                pauseBtn.removeFromParent()
+                self.bird.removeAllActions()
+            }
+        } else if firstBody.categoryBitMask == CollisionBitMask.birdCategory && secondBody.categoryBitMask == CollisionBitMask.flowerCategory {
+            run(coinSound)
+            score += 1
+            scoreLbl.text = "\(score)"
+            secondBody.node?.removeFromParent()
+        } else if firstBody.categoryBitMask == CollisionBitMask.flowerCategory && secondBody.categoryBitMask == CollisionBitMask.birdCategory {
+            run(coinSound)
+            score += 1
+            scoreLbl.text = "\(score)"
+            firstBody.node?.removeFromParent()
+        }
+    }
+    
+    func restartScene(){
+        self.removeAllChildren()
+        self.removeAllActions()
+        isDied = false
+        isGameStarted = false
+        score = 0
+        createScene()
     }
 }
 
