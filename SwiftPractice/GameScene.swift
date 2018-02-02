@@ -36,7 +36,45 @@ class GameScene: SKScene ,SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        if isGameStarted == false{
+            //1
+            isGameStarted =  true
+            bird.physicsBody?.affectedByGravity = true
+            createPauseBtn()
+            //2
+            logoImg.run(SKAction.scale(to: 0.5, duration: 0.3), completion: {
+                self.logoImg.removeFromParent()
+            })
+            taptoplayLbl.removeFromParent()
+            //3
+            self.bird.run(repeatActionBird)
+            
+            //1
+            let spawn = SKAction.run({
+                () in
+                self.wallPair = self.createWalls()
+                self.addChild(self.wallPair)
+            })
+            //2
+            let delay = SKAction.wait(forDuration: 1.5)
+            let SpawnDelay = SKAction.sequence([spawn, delay])
+            let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
+            self.run(spawnDelayForever)
+            //3
+            let distance = CGFloat(self.frame.width + wallPair.frame.width)
+            let movePillars = SKAction.moveBy(x: -distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
+            let removePillars = SKAction.removeFromParent()
+            moveAndRemove = SKAction.sequence([movePillars, removePillars])
+            
+            bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 40))
+        } else {
+            //4
+            if isDied == false {
+                bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 40))
+            }
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -88,6 +126,17 @@ class GameScene: SKScene ,SKPhysicsContactDelegate {
         //PREPARE TO ANIMATE THE BIRD AND REPEAT THE ANIMATION FOREVER
         let animateBird = SKAction.animate(with: self.birdSprites as! [SKTexture], timePerFrame: 0.1)
         self.repeatActionBird = SKAction.repeatForever(animateBird)
+        
+        scoreLbl = createScoreLabel()
+        self.addChild(scoreLbl)
+        
+        highscoreLbl = createHighscoreLabel()
+        self.addChild(highscoreLbl)
+        
+        createLogo()
+        
+        taptoplayLbl = createTaptoplayLabel()
+        self.addChild(taptoplayLbl)
     }
 }
 
