@@ -128,8 +128,8 @@ extension GameScene {
         wallPair = SKNode()
         wallPair.name = "wallPair"
         
-        let topWall = SKSpriteNode(imageNamed: "pillar")
-        let btmWall = SKSpriteNode(imageNamed: "pillar")
+        let topWall = SKSpriteNode(imageNamed: "piller")
+        let btmWall = SKSpriteNode(imageNamed: "piller")
         
         topWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 + 420)
         btmWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 - 420)
